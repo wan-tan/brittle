@@ -1,0 +1,16 @@
+{
+  "name": "brittle",
+  "version": "0.0.0",
+  "description": "isometric multiplayer game engine",
+  "main": "index.js",
+  "author": "Thanh Duc Nguyen",
+  "private": true,
+  "license": "BSD",
+  "dependencies": {
+    "express": "4.13.4",
+    "socket.io": "^2.0.3"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
