@@ -1,3 +1,8 @@
+// var $ = require('jquery')
+// var socket = require('socket.io-client')('http://localhost:3000')
+
+
+
 $(function() {
   var FADE_TIME = 150; // ms
   var TYPING_TIMER_LENGTH = 400; // ms
@@ -25,8 +30,9 @@ $(function() {
 
   var socket = io();
 
+
   function addParticipantsMessage (data) {
-    // UPDATE INSTEAD 
+    // UPDATE INSTEAD
 
     // var message = '';
     // if (data.numUsers === 1) {
@@ -64,8 +70,11 @@ $(function() {
       $currentInput = $inputMessage.focus();
       localStorage.setItem("username", username);
 
+      localStorage.setItem("username", username);
+
       // Tell the server your username
       socket.emit('add user', username);
+
     }
   }
 
