@@ -13,7 +13,7 @@ $(function() {
   var $messages = $('.messages'); // Messages area
   var $inputMessage = $('.inputMessage'); // Input message input box
 
-  var $loginPage = $('.login.page'); // The login page
+  var $loginPage = $('.login'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
 
   // Prompt for setting a username
@@ -26,30 +26,49 @@ $(function() {
   var socket = io();
 
   function addParticipantsMessage (data) {
-    var message = '';
-    if (data.numUsers === 1) {
-      message += "there's 1 participant";
-    } else {
-      message += "there are " + data.numUsers + " participants";
-    }
-    log(message);
+    // UPDATE INSTEAD 
+
+    // var message = '';
+    // if (data.numUsers === 1) {
+    //   message += "there's 1 participant";
+    // } else {
+    //   message += "there are " + data.numUsers + " participants";
+    // }
+    // log(message);
   }
+
+  // Check if user has logged in before
+  if( localStorage.getItem("username") ) {
+    username = localStorage.getItem("username")
+    $loginPage.fadeOut();
+    $chatPage.show();
+    $loginPage.off('click');
+    $currentInput = $inputMessage.focus();
+
+    // Tell the server your username
+    socket.emit('add user', username);
+  } else {
+    console.log($loginPage.css("display"));
+    $loginPage.css("display", "block")
+  }
+
 
   // Sets the client's username
   function setUsername () {
-    username = cleanInput($usernameInput.val().trim());
-
     // If the username is valid
-    if (username) {
+    if (!username) {
+      username = cleanInput($usernameInput.val().trim());
       $loginPage.fadeOut();
       $chatPage.show();
       $loginPage.off('click');
       $currentInput = $inputMessage.focus();
+      localStorage.setItem("username", username);
 
       // Tell the server your username
       socket.emit('add user', username);
     }
   }
+
 
   // Sends a chat message
   function sendMessage () {
