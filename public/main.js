@@ -1,3 +1,8 @@
+var $ = require('jquery')
+var socket = require('socket.io-client')('http://localhost:3000')
+
+
+
 $(function() {
   var FADE_TIME = 150; // ms
   var TYPING_TIMER_LENGTH = 400; // ms
@@ -23,7 +28,8 @@ $(function() {
   var lastTypingTime;
   var $currentInput = $usernameInput.focus();
 
-  var socket = io();
+  // var socket = io();
+
 
   function addParticipantsMessage (data) {
     var message = '';
@@ -35,19 +41,33 @@ $(function() {
     log(message);
   }
 
+  // Check if user has logged in before
+  if( localStorage.getItem("username") ) {
+    username = localStorage.getItem("username")
+    $loginPage.fadeOut();
+    $chatPage.show();
+    $loginPage.off('click');
+    $currentInput = $inputMessage.focus();
+
+    // Tell the server your username
+    socket.emit('add user', username);
+  }
+
   // Sets the client's username
   function setUsername () {
-    username = cleanInput($usernameInput.val().trim());
-
     // If the username is valid
-    if (username) {
+    if (!username) {
+      username = cleanInput($usernameInput.val().trim());
       $loginPage.fadeOut();
       $chatPage.show();
       $loginPage.off('click');
       $currentInput = $inputMessage.focus();
 
+      localStorage.setItem("username", username);
+
       // Tell the server your username
       socket.emit('add user', username);
+
     }
   }
 

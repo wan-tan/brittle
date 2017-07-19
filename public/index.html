@@ -37,14 +37,23 @@
       padding: 0;
     }
 
+    body {
+      background: #eee;
+    }
+
     ul {
       list-style: none;
       word-wrap: break-word;
     }
 
-    /* Pages */
+    input{
+      border: none;
+    }
 
+    /* Pages */
     .pages {
+      box-shadow: 0 0 50px rgba(0,0,0,.25);
+      position: relative;
       height: 100%;
       margin: 0;
       padding: 0;
@@ -58,40 +67,39 @@
     }
 
     /* Login Page */
-
-    .login.page {
-      background-color: #000;
+    .login {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
     }
 
-    .login.page .form {
-      height: 100px;
-      margin-top: -100px;
-      position: absolute;
+    .login .form {
       text-align: center;
       top: 50%;
       width: 100%;
     }
 
-    .login.page .form .usernameInput {
+    .login .form .usernameInput {
       background-color: transparent;
       border: none;
       border-bottom: 2px solid #fff;
       outline: none;
       padding-bottom: 15px;
       text-align: center;
-      width: 400px;
+      width: 100%;
     }
 
-    .login.page .title {
-      font-size: 200%;
+    .login .title {
+      font-size: 1em;
     }
 
-    .login.page .usernameInput {
+    .login .usernameInput {
       font-size: 200%;
       letter-spacing: 3px;
     }
 
-    .login.page .title, .login.page .usernameInput {
+    .login .title, .login.page .usernameInput {
       color: #fff;
       font-weight: 100;
     }
@@ -147,7 +155,6 @@
     /* Input */
 
     .inputMessage {
-      border: 10px solid #000;
       bottom: 0;
       height: 60px;
       left: 0;
@@ -157,26 +164,46 @@
       right: 0;
       width: 100%;
     }
+
+    #chat-component{
+      width: 600px;
+      height: 400px;
+    }
+
   </style>
 </head>
 <body>
-  <ul class="pages">
-    <li class="chat page">
-      <div class="chatArea">
-        <ul class="messages"></ul>
-      </div>
-      <input class="inputMessage" placeholder="Write a message ..."/>
-    </li>
-    <li class="login page">
-      <div class="form">
-        <h3 class="title">Choose your name:</h3>
-        <input class="usernameInput" type="text" maxlength="14" />
-      </div>
-    </li>
-  </ul>
+  <div id="chat-component" class="component">
+    <ul class="pages">
+      <li class="chat page">
+        <div class="chatArea">
+          <ul class="messages"></ul>
+        </div>
+        <input class="inputMessage" placeholder="Write a message ..."/>
+      </li>
+      <li class="login">
+        <div class="form">
+          <h3 class="title">Choose your name:</h3>
+          <input class="usernameInput" type="text" maxlength="14" />
+        </div>
+      </li>
+    </ul>
+  </div>
 
-  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+  <!-- <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.5.3/pixi.js"></script> -->
   <!-- <script src="/socket.io/socket.io.js"></script> -->
   <script src="/main.js"></script>
+
+
+  <script type="text/javascript">
+    var type = "WebGL"
+    if(!PIXI.utils.isWebGLSupported()){
+      type = "canvas"
+    }
+
+    PIXI.utils.sayHello(type)
+  </script>
 </body>
 </html>
